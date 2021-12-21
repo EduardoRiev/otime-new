@@ -137,6 +137,15 @@ export default {
       this.professor.coordenador = null;
       this.professor.imagem = null;
     },
+   deleteProfessor(professorId) {
+      this.axios
+        .delete("http://otime-api.herokuapp.com/professores/" + professorId)
+        .then(() => {
+          this.professores = this.professores.filter(
+            (p) => p.id != professorId
+          );
+        });
+    }, 
   },
 };
 </script>
