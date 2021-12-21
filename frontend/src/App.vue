@@ -74,7 +74,7 @@
 
           <v-list-item link to="/professores">
             <v-list-item-icon>
-              <v-icon>mdi-teach</v-icon>
+              <v-icon>mdi-human-male-board</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title> professores </v-list-item-title>
