@@ -8,20 +8,58 @@
       </v-btn>
     </v-toolbar>
     <template v-if="disciplinas && disciplinas.length">
-      <v-card class="my-2" dark v-for="disciplina in disciplinas" :key="disciplina.id">
+      <v-card 
+      class="my-2" 
+      color="blue-grey darken-3"
+      dark 
+      v-for="disciplina in disciplinas" 
+      :key="disciplina.id"
+      >
         <v-card-title>
           {{ disciplina.nome }}
           <v-spacer></v-spacer>
-          <v-card-actions>
-            <v-btn icon>
-              <v-icon> mdi-pencil </v-icon>
-            </v-btn>
-          </v-card-actions>
         </v-card-title>
-        <v-card-subtitle>
-          {{ disciplina.abreviatura }}
-        </v-card-subtitle>
-        <v-card-title> disciplina #{{ disciplina.id }} </v-card-title>
+        <v-card-subtitle>{{ disciplina.abreviatura }}</v-card-subtitle>
+        <v-card-actions>
+          <v-btn outlined text> <v-icon small>mdi-pencil</v-icon>editar </v-btn>
+          <!------------------------------------------------REMOVER------------------------------------------------>
+          <template>
+            <v-col cols="auto">
+              <v-dialog max-width="600">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text outlined v-bind="attrs" v-on="on">
+                    <v-icon small>mdi-delete</v-icon>
+                    REMOVER
+                  </v-btn>
+                </template>
+                <template v-slot:default="dialog2">
+                  <v-card>
+                    <v-card-title class="text-h5 red white--text lighten-2"
+                      >EXCLUIR</v-card-title
+                    ><v-card-text></v-card-text>
+                    <v-card-text class="text-md-body-1 black--text">
+                      Deseja remover {{ disciplina.nome }}?
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions class="justify-end">
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="dialog2.value = false">voltar</v-btn>
+                      <v-btn
+                        color="error"
+                        @click="deleteDisciplina(disciplina.id)"
+                        >REMOVER</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
+            </v-col>
+          </template>
+          <!------------------------------------------------FIM-REMOVER--------------------------------------------->
+          <v-btn outlined text>
+            <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </template>
     <template>
@@ -158,6 +196,15 @@ export default {
       this.disciplina.abreviatura = null;
       this.disciplina.creditos = null;
     },
+    deleteDisciplina(disciplinaId) {
+      this.axios
+        .delete("http://otime-api.herokuapp.com/disciplinas/" + disciplinaId)
+        .then(() => {
+          this.disciplinas = this.disciplinas.filter(
+            (p) => p.id != disciplinaId
+          );
+        });
+    }, 
   },
 };
 </script>
