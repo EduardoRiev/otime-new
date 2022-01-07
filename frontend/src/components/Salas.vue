@@ -22,6 +22,46 @@
           {{ sala.abreviatura }}
         </v-card-subtitle>
         <v-card-title> sala #{{ sala.id }} </v-card-title>
+        <v-card-actions>
+          <v-btn outlined text> <v-icon small>mdi-pencil</v-icon>editar </v-btn>
+          <!------------------------------------------------REMOVER------------------------------------------------>
+          <template>
+            <v-col cols="auto">
+              <v-dialog max-width="600">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text outlined v-bind="attrs" v-on="on">
+                    <v-icon small>mdi-delete</v-icon>
+                    REMOVER
+                  </v-btn>
+                </template>
+                <template v-slot:default="dialog2">
+                  <v-card>
+                    <v-card-title class="text-h5 red white--text lighten-2"
+                      >EXCLUIR</v-card-title
+                    ><v-card-text></v-card-text>
+                    <v-card-text class="text-md-body-1 black--text">
+                      Deseja remover ? {{ sala.nome }}
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions class="justify-end">
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="dialog2.value = false">voltar</v-btn>
+                      <v-btn
+                        color="error"
+                        @click="deleteSala(sala.id)"
+                        >REMOVER</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
+            </v-col>
+          </template>
+          <!------------------------------------------------FIM-REMOVER--------------------------------------------->
+          <v-btn outlined text>
+            <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </template>
     <template>
@@ -140,6 +180,15 @@ export default {
       this.sala.nome = null;
       this.sala.abreviatura = null;
       this.sala.capacidade = null;
+    },
+    deleteSala(salaId) {
+      this.axios
+        .delete("http://otime-api.herokuapp.com/salas/" + salaId)
+        .then(() => {
+          this.salas = this.salas.filter(
+            (p) => p.id != salaId
+          );
+        });
     },
   },
 };
