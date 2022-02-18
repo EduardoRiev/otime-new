@@ -8,12 +8,13 @@
       </v-btn>
     </v-toolbar>
     <template v-if="turmas && turmas.length">
-      <v-card 
-      class="my-2" 
-      color="blue-grey darken-3"
-      dark 
-      v-for="turma in turmas" 
-      :key="turma.id">
+      <v-card
+        class="my-2"
+        color="blue-grey darken-3"
+        dark
+        v-for="turma in turmas"
+        :key="turma.id"
+      >
         <v-card-title>
           {{ turma.nome }}
           <v-spacer></v-spacer>
@@ -31,16 +32,17 @@
                 </template>
                 <template v-slot:default="dialog3">
                   <v-card>
-                    <v-card-title class="headline"
-                      >EDITAR TURMA
-                    </v-card-title>
+                    <v-card-title class="headline">EDITAR TURMA </v-card-title>
                     <v-card-text>
                       <v-container>
                         <v-form ref="form" v-model="isValid">
                           <v-text-field label="nome" v-model="turma.nome">
                             {{ turma.nome }}
                           </v-text-field>
-                          <v-text-field label="abreviatura" v-model="turma.abreviatura">
+                          <v-text-field
+                            label="abreviatura"
+                            v-model="turma.abreviatura"
+                          >
                             {{ turma.abreviatura }}
                           </v-text-field>
                         </v-form>
@@ -50,7 +52,11 @@
                     <v-card-actions class="justify-end">
                       <v-spacer></v-spacer>
                       <v-btn text @click="dialog3.value = false">VOLTAR</v-btn>
-                      <v-btn color="success" @click="atualizarTurma(turma.id)">ATUALIZAR</v-btn>
+                      <v-btn
+                        color="success"
+                        @click="atualizarTurma(turma.id, turma)"
+                        >ATUALIZAR</v-btn
+                      >
                     </v-card-actions>
                   </v-card>
                 </template>
@@ -79,9 +85,7 @@
                     <v-card-actions class="justify-end">
                       <v-spacer></v-spacer>
                       <v-btn text @click="dialog2.value = false">voltar</v-btn>
-                      <v-btn
-                        color="error"
-                        @click="deleteTurma(turma.id)"
+                      <v-btn color="error" @click="deleteTurma(turma.id)"
                         >REMOVER</v-btn
                       >
                     </v-card-actions>
@@ -95,8 +99,8 @@
             <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
           </v-btn>
         </v-card-actions>
-        </v-card>
-      </template>
+      </v-card>
+    </template>
     <template>
       <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
@@ -170,9 +174,9 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/turmas/")
+      .get('http://otime-api.herokuapp.com/turmas/')
       .then((response) => (this.turmas = response.data))
-      .catch((error) => console.log("Erro na requisição GET: " + error));
+      .catch((error) => console.log('Erro na requisição GET: ' + error));
   },
   methods: {
     cadastrarTurma() {
@@ -181,36 +185,36 @@ export default {
         abreviatura: this.turma.abreviatura,
       };
       this.axios
-        .post("http://otime-api.herokuapp.com/turmas/", turma)
+        .post('http://otime-api.herokuapp.com/turmas/', turma)
         .then((response) => (this.turmas = [...this.turmas, response.data]))
         .catch((error) => console.log(error));
       this.dialog = false;
       this.turma.nome = null;
       this.turma.abreviatura = null;
     },
-    atualizarTurma(turmaId) {
-      console.log("nome ", this.turma.nome)
+    atualizarTurma(turmaId, turma) {
       this.axios
-        .put("http://otime-api.herokuapp.com/turmas/" + turmaId + "/", 
-        {
-          nome: this.turma.nome,
-          abreviatura: this.turma.abreviatura,
+        .put('http://otime-api.herokuapp.com/turmas/' + turmaId + '/', {
+          nome: turma.nome,
+          abreviatura: turma.abreviatura,
         })
-        .then(response => (this.turmas = response.data))
+        .then((response) => (this.turmas = response.data))
         .catch((error) => console.log(error));
-    }, 
-   deleteTurma(turmaId) {
       this.axios
-        .delete("http://otime-api.herokuapp.com/turmas/" + turmaId)
+        .get('http://otime-api.herokuapp.com/turmas/')
+        .then((response) => (this.turmas = response.data))
+        .catch((error) => console.log('Erro na requisição GET: ' + error));
+    },
+    deleteTurma(turmaId) {
+      this.axios
+        .delete('http://otime-api.herokuapp.com/turmas/' + turmaId)
         .then(() => {
-          this.turmas = this.turmas.filter(
-            (p) => p.id != turmaId
-          );
+          this.turmas = this.turmas.filter((p) => p.id != turmaId);
         });
-    }, 
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
+
