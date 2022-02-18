@@ -200,10 +200,6 @@ export default {
         })
         .then((response) => (this.turmas = response.data))
         .catch((error) => console.log(error));
-      this.axios
-        .get('http://otime-api.herokuapp.com/turmas/')
-        .then((response) => (this.turmas = response.data))
-        .catch((error) => console.log('Erro na requisição GET: ' + error));
     },
     deleteTurma(turmaId) {
       this.axios
