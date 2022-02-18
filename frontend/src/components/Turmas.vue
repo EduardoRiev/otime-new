@@ -13,15 +13,50 @@
       color="blue-grey darken-3"
       dark 
       v-for="turma in turmas" 
-      :key="turma.id"
-      >
+      :key="turma.id">
         <v-card-title>
           {{ turma.nome }}
           <v-spacer></v-spacer>
         </v-card-title>
- <v-card-subtitle>{{ turma.abreviatura }}</v-card-subtitle>
+        <v-card-subtitle>{{ turma.abreviatura }}</v-card-subtitle>
         <v-card-actions>
-          <v-btn outlined text> <v-icon small>mdi-pencil</v-icon>editar </v-btn>
+          <template>
+            <v-col cols="auto">
+              <v-dialog max-width="600">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text outlined v-bind="attrs" v-on="on">
+                    <v-icon small>mdi-pencil</v-icon>
+                    EDITAR
+                  </v-btn>
+                </template>
+                <template v-slot:default="dialog3">
+                  <v-card>
+                    <v-card-title class="headline"
+                      >EDITAR TURMA
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-form ref="form" v-model="isValid">
+                          <v-text-field label="nome" v-model="turma.nome">
+                            {{ turma.nome }}
+                          </v-text-field>
+                          <v-text-field label="abreviatura" v-model="turma.abreviatura">
+                            {{ turma.abreviatura }}
+                          </v-text-field>
+                        </v-form>
+                      </v-container>
+                    </v-card-text>
+                    <v-spacer></v-spacer>
+                    <v-card-actions class="justify-end">
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="dialog3.value = false">VOLTAR</v-btn>
+                      <v-btn color="success" @click="atualizarTurma(turma.id)">ATUALIZAR</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
+            </v-col>
+          </template>
           <!------------------------------------------------REMOVER------------------------------------------------>
           <template>
             <v-col cols="auto">
@@ -153,6 +188,17 @@ export default {
       this.turma.nome = null;
       this.turma.abreviatura = null;
     },
+    atualizarTurma(turmaId) {
+      console.log("nome ", this.turma.nome)
+      this.axios
+        .put("http://otime-api.herokuapp.com/turmas/" + turmaId + "/", 
+        {
+          nome: this.turma.nome,
+          abreviatura: this.turma.abreviatura,
+        })
+        .then(response => (this.turmas = response.data))
+        .catch((error) => console.log(error));
+    }, 
    deleteTurma(turmaId) {
       this.axios
         .delete("http://otime-api.herokuapp.com/turmas/" + turmaId)
