@@ -221,6 +221,23 @@ export default {
       this.professor.coordenador = null;
       this.professor.imagem = null;
     },
+    atualizarProfessor(professorId, professor) {
+      this.axios
+        .put(
+          "http://otime-api.herokuapp.com/professores/" + professorId + "/",
+          {
+            nome: professor.nome,
+            abreviatura: professor.abreviatura,
+            coordenador: professor.coordenador
+          }
+        )
+        .then((response) => (this.professores = response.data))
+        .catch((error) => console.log(error));
+      this.axios
+        .get("http://otime-api.herokuapp.com/professores/")
+        .then((response) => (this.professores = response.data))
+        .catch((error) => console.log("Erro na requisição GET: " + error));
+    },
     deleteProfessor(professorId) {
       this.axios
         .delete("http://otime-api.herokuapp.com/professores/" + professorId)
