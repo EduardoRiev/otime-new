@@ -54,7 +54,7 @@
                           <v-row align="center">
                             <v-col>
                               <v-select
-                                v-model="selectedTeacher"
+                                v-model="disciplina.professores"
                                 :items="professores"
                                 item-text="nome"
                                 item-value="id"
@@ -67,7 +67,7 @@
                           <v-row align="center">
                             <v-col>
                               <v-select
-                                v-model="selectedPlaces"
+                                v-model="disciplina.locais"
                                 :items="salas"
                                 item-text="nome"
                                 item-value="id"
@@ -95,7 +95,6 @@
               </v-dialog>
             </v-col>
           </template>
-          <!------------------------------------------------REMOVER------------------------------------------------>
           <template>
             <v-col cols="auto">
               <v-dialog max-width="600">
@@ -128,7 +127,6 @@
               </v-dialog>
             </v-col>
           </template>
-          <!------------------------------------------------FIM-REMOVER--------------------------------------------->
           <v-btn outlined text>
             <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
           </v-btn>
@@ -239,15 +237,15 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/disciplinas/")
+      .get("https://otime-api.herokuapp.com/disciplinas/")
       .then((response) => (this.disciplinas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("http://otime-api.herokuapp.com/professores/")
+      .get("https://otime-api.herokuapp.com/professores/")
       .then((response) => (this.professores = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("http://otime-api.herokuapp.com/salas/")
+      .get("https://otime-api.herokuapp.com/salas/")
       .then((response) => (this.salas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
   },
@@ -261,7 +259,7 @@ export default {
         locais: this.selectedPlaces
       };
       this.axios
-        .post("http://otime-api.herokuapp.com/disciplinas/", disciplina)
+        .post("https://otime-api.herokuapp.com/disciplinas/", disciplina)
         .then((response) => (this.disciplinas = [...this.disciplinas, response.data]))
         .catch((error) => console.log(error));
       this.dialog = false;
@@ -271,19 +269,19 @@ export default {
     },
     atualizarDisciplina(disciplinaId, disciplina) {
       this.axios
-        .put("http://otime-api.herokuapp.com/disciplinas/" + disciplinaId + "/", {
+        .put("https://otime-api.herokuapp.com/disciplinas/" + disciplinaId + "/", {
           nome: disciplina.nome,
           abreviatura: disciplina.abreviatura,
           credito: disciplina.creditos,
-          professores: this.selectedTeacher,
-          locais: disciplina.selectedPlaces
+          professores: disciplina.professores,
+          locais: disciplina.locais
         })
         .then((response) => (this.disciplinas = response.data))
         .catch(error => console.log(error));
     },
     deleteDisciplina(disciplinaId) {
       this.axios
-        .delete("http://otime-api.herokuapp.com/disciplinas/" + disciplinaId)
+        .delete("https://otime-api.herokuapp.com/disciplinas/" + disciplinaId)
         .then(() => {
           this.disciplinas = this.disciplinas.filter(
             (p) => p.id != disciplinaId
