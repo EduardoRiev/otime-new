@@ -266,7 +266,6 @@ export default {
           
         })
         .catch(error => console.log(error));
-        this.dialog3.value = false;
     }
   }
 };

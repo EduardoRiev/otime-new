@@ -47,7 +47,7 @@
                           <v-row align="center">
                             <v-col>
                               <v-select
-                                v-model="selectedTools"
+                                v-model="tipo.ferramentas"
                                 :items="ferramentas"
                                 item-text="nome"
                                 item-value="id"
@@ -212,7 +212,7 @@ export default {
       this.axios
         .put("http://otime-api.herokuapp.com/tiposDeSala/" + tipo.id + "/", {
           nome: tipo.nome,
-          ferramentas: this.selectedTools
+          ferramentas: tipo.ferramentas
         })
         .then(response => {
           this.tipos = this.tipos.map(s => {
@@ -224,7 +224,7 @@ export default {
           });
         })
         .catch(error => console.log(error));
-      this.dialog3 = false;
+        this.dialog3 = false;
     },
     cadastrarTipo() {
       const tipo = {
