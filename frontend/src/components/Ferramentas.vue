@@ -8,7 +8,12 @@
       </v-btn>
     </v-toolbar>
     <template v-if="ferramentas && ferramentas.length">
-      <v-card class="my-2" dark v-for="ferramenta in ferramentas" :key="ferramenta.id">
+      <v-card
+        class="my-2"
+        dark
+        v-for="ferramenta in ferramentas"
+        :key="ferramenta.id"
+      >
         <v-card-title>
           {{ ferramenta.nome }}
           <v-spacer></v-spacer>
@@ -23,7 +28,55 @@
         </v-card-subtitle>
         <v-card-title> Ferramenta #{{ ferramenta.id }} </v-card-title>
         <v-card-actions>
-          <v-btn outlined text> <v-icon small>mdi-pencil</v-icon>editar </v-btn>
+          <template>
+            <v-col cols="auto">
+              <v-dialog v-model="dialog3" persistent max-width="600px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text outlined v-bind="attrs" v-on="on">
+                    <v-icon small>mdi-pencil</v-icon>
+                    EDITAR
+                  </v-btn>
+                </template>
+                <template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Nova ferramenta</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-form ref="form" v-model="isValid">
+                          <v-text-field
+                            required
+                            :rules="[v => !!v || 'Precisamos disso :c']"
+                            label="nome"
+                            v-model="ferramenta.nome"
+                          ></v-text-field>
+                          <v-text-field
+                            :rules="[v => !!v || 'Precisamos disso :c']"
+                            required
+                            label="descrição"
+                            v-model="ferramenta.descricao"
+                          ></v-text-field>
+                        </v-form>
+                      </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="dialog3 = false"> Voltar </v-btn>
+                      <v-btn
+                        :disabled="!isValid"
+                        color="success"
+                        text
+                        @click="atualizarFerramenta(ferramenta)"
+                      >
+                        Atualizar
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
+            </v-col>
+          </template>
           <!------------------------------------------------REMOVER------------------------------------------------>
           <template>
             <v-col cols="auto">
@@ -57,7 +110,7 @@
               </v-dialog>
             </v-col>
           </template>
-          <!------------------------------------------------FIM-REMOVER--------------------------------------------->
+
           <v-btn outlined text>
             <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
           </v-btn>
@@ -90,12 +143,12 @@
                 <v-form ref="form" v-model="isValid">
                   <v-text-field
                     required
-                    :rules="[(v) => !!v || 'Precisamos disso :c']"
+                    :rules="[v => !!v || 'Precisamos disso :c']"
                     label="nome"
                     v-model="ferramenta.nome"
                   ></v-text-field>
                   <v-text-field
-                    :rules="[(v) => !!v || 'Precisamos disso :c']"
+                    :rules="[v => !!v || 'Precisamos disso :c']"
                     required
                     label="descrição"
                     v-model="ferramenta.descricao"
@@ -129,44 +182,65 @@ export default {
       ferramentas: null,
       ferramenta: {
         nome: null,
-        descricao: null,
+        descricao: null
       },
       dialog: false,
-      isValid: true,
+      dialog3: false,
+      isValid: true
     };
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/ferramentasDeSala/")
-      .then((response) => (this.ferramentas = response.data))
-      .catch((error) => console.log("Erro na requisição GET: " + error));
+      .get("http://otime-api2.herokuapp.com/ferramentasDeSala/")
+      .then(response => (this.ferramentas = response.data))
+      .catch(error => console.log("Erro na requisição GET: " + error));
   },
   methods: {
     cadastrarFerramenta() {
       const ferramenta = {
         nome: this.ferramenta.nome,
-        descricao: this.ferramenta.descricao,
+        descricao: this.ferramenta.descricao
       };
       this.axios
-        .post("http://otime-api.herokuapp.com/ferramentasDeSala/", ferramenta)
-        .then((response) => (this.ferramentas = [...this.ferramentas, response.data]))
-        .catch((error) => console.log(error));
+        .post("http://otime-api2.herokuapp.com/ferramentasDeSala/", ferramenta)
+        .then(
+          response => (this.ferramentas = [...this.ferramentas, response.data])
+        )
+        .catch(error => console.log(error));
       this.dialog = false;
       this.ferramenta.nome = null;
       this.ferramenta.descricao = null;
     },
     deleteFerramenta(ferramentaId) {
       this.axios
-        .delete("http://otime-api.herokuapp.com/ferramentasDeSala/" + ferramentaId)
+        .delete(
+          "http://otime-api2.herokuapp.com/ferramentasDeSala/" + ferramentaId
+        )
         .then(() => {
-          this.ferramentas = this.ferramentas.filter(
-            (p) => p.id != ferramentaId
-          );
+          this.ferramentas = this.ferramentas.filter(p => p.id != ferramentaId);
         });
     },
-  },
+    atualizarFerramenta(ferramenta) {
+      console.log(ferramenta);
+      this.axios
+        .put("http://otime-api2.herokuapp.com/ferramentasDeSala/" + ferramenta.id + "/", {
+          nome: ferramenta.nome,
+          descricao: ferramenta.descricao
+        })
+        .then(response => {
+          this.ferramentas = this.ferramentas.map(s => {
+            if (s.id == ferramenta.id) {
+              return response.data;
+            } else {
+              return s;
+            }
+          });
+        })
+        .catch(error => console.log(error));
+      this.dialog3 = false;
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

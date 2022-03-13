@@ -174,7 +174,7 @@ export default {
   },
   mounted() {
     this.axios
-      .get('http://otime-api.herokuapp.com/turmas/')
+      .get("http://otime-api2.herokuapp.com/turmas/")
       .then((response) => (this.turmas = response.data))
       .catch((error) => console.log('Erro na requisição GET: ' + error));
   },
@@ -185,7 +185,7 @@ export default {
         abreviatura: this.turma.abreviatura,
       };
       this.axios
-        .post('http://otime-api.herokuapp.com/turmas/', turma)
+        .post("http://otime-api2.herokuapp.com/turmas/", turma)
         .then((response) => (this.turmas = [...this.turmas, response.data]))
         .catch((error) => console.log(error));
       this.dialog = false;
@@ -194,7 +194,7 @@ export default {
     },
     atualizarTurma(turmaId, turma) {
       this.axios
-        .put('http://otime-api.herokuapp.com/turmas/' + turmaId + '/', {
+        .put('http://otime-api2.herokuapp.com/turmas/' + turmaId + '/', {
           nome: turma.nome,
           abreviatura: turma.abreviatura,
         })
@@ -203,7 +203,7 @@ export default {
     },
     deleteTurma(turmaId) {
       this.axios
-        .delete('http://otime-api.herokuapp.com/turmas/' + turmaId)
+        .delete("http://otime-api2.herokuapp.com/turmas/" + turmaId)
         .then(() => {
           this.turmas = this.turmas.filter((p) => p.id != turmaId);
         });

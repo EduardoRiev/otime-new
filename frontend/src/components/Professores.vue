@@ -196,7 +196,7 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/professores/")
+      .get("http://otime-api2.herokuapp.com/professores/")
       .then((response) => (this.professores = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
   },
@@ -209,7 +209,7 @@ export default {
         imagem: this.professor.imagem,
       };
       this.axios
-        .post("http://otime-api.herokuapp.com/professores/", professor)
+        .post("http://otime-api2.herokuapp.com/professores/", professor)
         .then(
           (response) =>
             (this.professores = [...this.professores, response.data])
@@ -240,7 +240,7 @@ export default {
     },
     deleteProfessor(professorId) {
       this.axios
-        .delete("http://otime-api.herokuapp.com/professores/" + professorId)
+        .delete("http://otime-api2.herokuapp.com/professores/" + professorId)
         .then(() => {
           this.professores = this.professores.filter(
             (p) => p.id != professorId

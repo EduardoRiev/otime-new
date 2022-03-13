@@ -94,7 +94,7 @@ export default {
     };
 
     this.axios
-      .get("http://otime-api.herokuapp.com/cards/", {
+      .get("http://otime-api2.herokuapp.com/cards/", {
         params: {
           sala: salaId,
         },
@@ -102,19 +102,19 @@ export default {
       .then((response) => {
         this.cards = response.data;
         this.axios
-          .get("http://otime-api.herokuapp.com/disciplinas/")
+          .get("http://otime-api2.herokuapp.com/disciplinas/")
           .then((response) => {
             this.disciplinas = criarMap(response.data);
             this.axios
-              .get("http://otime-api.herokuapp.com/turmas/")
+              .get("http://otime-api2.herokuapp.com/turmas/")
               .then((response) => {
                 this.turmas = criarMap(response.data);
                 this.axios
-                  .get("http://otime-api.herokuapp.com/professores/")
+                  .get("http://otime-api2.herokuapp.com/professores/")
                   .then((response) => {
                     this.professores = criarMap(response.data);
                     this.axios
-                      .get("http://otime-api.herokuapp.com/salas/" + salaId + "/")
+                      .get("http://otime-api2.herokuapp.com/salas/" + salaId + "/")
                       .then((response) => {
                         this.sala = response.data;
                         montarTabelaHorario();
