@@ -237,15 +237,15 @@ export default {
   },
   mounted() {
     this.axios
-      .get("https://otime-api.herokuapp.com/disciplinas/")
+      .get("http://otime-api2.herokuapp.com/disciplinas/")
       .then((response) => (this.disciplinas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("https://otime-api.herokuapp.com/professores/")
+      .get("http://otime-api2.herokuapp.com/professores/")
       .then((response) => (this.professores = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("https://otime-api.herokuapp.com/salas/")
+      .get("http://otime-api2.herokuapp.com/salas/")
       .then((response) => (this.salas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
   },
@@ -259,7 +259,7 @@ export default {
         locais: this.selectedPlaces
       };
       this.axios
-        .post("https://otime-api.herokuapp.com/disciplinas/", disciplina)
+        .post("http://otime-api2.herokuapp.com/disciplinas/", disciplina)
         .then((response) => (this.disciplinas = [...this.disciplinas, response.data]))
         .catch((error) => console.log(error));
       this.dialog = false;
@@ -269,7 +269,7 @@ export default {
     },
     atualizarDisciplina(disciplinaId, disciplina) {
       this.axios
-        .put("https://otime-api.herokuapp.com/disciplinas/" + disciplinaId + "/", {
+        .put("https://otime-api2.herokuapp.com/disciplinas/" + disciplinaId + "/", {
           nome: disciplina.nome,
           abreviatura: disciplina.abreviatura,
           credito: disciplina.creditos,
@@ -281,7 +281,7 @@ export default {
     },
     deleteDisciplina(disciplinaId) {
       this.axios
-        .delete("https://otime-api.herokuapp.com/disciplinas/" + disciplinaId)
+        .delete("http://otime-api2.herokuapp.com/disciplinas/" + disciplinaId)
         .then(() => {
           this.disciplinas = this.disciplinas.filter(
             (p) => p.id != disciplinaId

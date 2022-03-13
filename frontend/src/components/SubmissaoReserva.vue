@@ -205,19 +205,19 @@ export default {
   mounted() {
     this.axios;
     this.axios
-      .get("http://otime-api.herokuapp.com/cards/")
+      .get("http://otime-api2.herokuapp.com/cards/")
       .then((response) => (this.cards = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("http://otime-api.herokuapp.com/disciplinas/")
+      .get("http://otime-api2.herokuapp.com/disciplinas/")
       .then((response) => (this.disciplinas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("http://otime-api.herokuapp.com/turmas/")
+      .get("http://otime-api2.herokuapp.com/turmas/")
       .then((response) => (this.turmas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("http://otime-api.herokuapp.com/salas/")
+      .get("http://otime-api2.herokuapp.com/salas/")
       .then((response) => (this.salas = response.data))
       .catch((error) => console.log("Erro na requisição GET: " + error));
   },
@@ -233,7 +233,7 @@ export default {
 
       };
       await this.axios
-        .get(`http://otime-api.herokuapp.com/cards/?sala=${card.sala}&disciplina=${card.disciplina}&turma=&dia=${card.dia}&horario=${card.horario}`)
+        .get(`http://otime-api2.herokuapp.com/cards/?sala=${card.sala}&disciplina=${card.disciplina}&turma=&dia=${card.dia}&horario=${card.horario}`)
         .then((response) => {
           console.log('response axios', response) 
           this.disponibilidade = response.data}
@@ -242,7 +242,7 @@ export default {
       console.log("end get", this.disponibilidade)
       if(this.disponibilidade.length == 0){
         this.axios
-          .post("http://otime-api.herokuapp.com/cards/", card)
+          .post("http://otime-api2.herokuapp.com/cards/", card)
           .then(
             (response) =>
               (this.cards = [...this.cards, response.data])
