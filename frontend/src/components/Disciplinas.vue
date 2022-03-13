@@ -21,8 +21,80 @@
         </v-card-title>
         <v-card-subtitle>{{ disciplina.abreviatura }}</v-card-subtitle>
         <v-card-actions>
-          <v-btn outlined text> <v-icon small>mdi-pencil</v-icon>editar </v-btn>
-          <!------------------------------------------------REMOVER------------------------------------------------>
+           <template>
+            <v-col cols="auto">
+              <v-dialog max-width="600">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text outlined v-bind="attrs" v-on="on">
+                    <v-icon small>mdi-pencil</v-icon>
+                    EDITAR
+                  </v-btn>
+                </template>
+                <template v-slot:default="dialog3">
+                  <v-card>
+                    <v-card-title class="headline">EDITAR DISCIPLINA </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-form ref="form" v-model="isValid">
+                          <v-text-field label="nome" v-model="disciplina.nome">
+                            {{ disciplina.nome }}
+                          </v-text-field>
+                          <v-text-field
+                            label="abreviatura"
+                            v-model="disciplina.abreviatura"
+                          >
+                            {{ disciplina.abreviatura }}
+                          </v-text-field>
+                          <v-text-field
+                            label="créditos"
+                            v-model="disciplina.credito"
+                          >
+                            {{ disciplina.credito }}
+                          </v-text-field>
+                          <v-row align="center">
+                            <v-col>
+                              <v-select
+                                v-model="disciplina.professores"
+                                :items="professores"
+                                item-text="nome"
+                                item-value="id"
+                                label="professores"
+                                multiple
+                              >
+                              </v-select>
+                            </v-col>
+                          </v-row>
+                          <v-row align="center">
+                            <v-col>
+                              <v-select
+                                v-model="disciplina.locais"
+                                :items="salas"
+                                item-text="nome"
+                                item-value="id"
+                                label="locais"
+                                multiple
+                              >
+                              </v-select>
+                            </v-col>
+                          </v-row>
+                        </v-form>
+                      </v-container>
+                    </v-card-text>
+                    <v-spacer></v-spacer>
+                    <v-card-actions class="justify-end">
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="dialog3.value = false">VOLTAR</v-btn>
+                      <v-btn
+                        color="success"
+                        @click="atualizarDisciplina(disciplina.id, disciplina)"
+                        >ATUALIZAR</v-btn
+                      >
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
+            </v-col>
+          </template>
           <template>
             <v-col cols="auto">
               <v-dialog max-width="600">
@@ -55,7 +127,6 @@
               </v-dialog>
             </v-col>
           </template>
-          <!------------------------------------------------FIM-REMOVER--------------------------------------------->
           <v-btn outlined text>
             <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
           </v-btn>
@@ -109,7 +180,7 @@
                         :items="professores"
                         item-text="nome"
                         item-value="id"
-                        label="professoress"
+                        label="professores"
                         multiple
                       ></v-select>
                     </v-col>
@@ -195,6 +266,18 @@ export default {
       this.disciplina.nome = null;
       this.disciplina.abreviatura = null;
       this.disciplina.creditos = null;
+    },
+    atualizarDisciplina(disciplinaId, disciplina) {
+      this.axios
+        .put("https://otime-api2.herokuapp.com/disciplinas/" + disciplinaId + "/", {
+          nome: disciplina.nome,
+          abreviatura: disciplina.abreviatura,
+          credito: disciplina.creditos,
+          professores: disciplina.professores,
+          locais: disciplina.locais
+        })
+        .then((response) => (this.disciplinas = response.data))
+        .catch(error => console.log(error));
     },
     deleteDisciplina(disciplinaId) {
       this.axios
