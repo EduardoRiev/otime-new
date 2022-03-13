@@ -241,7 +241,7 @@ export default {
     },
     deleteTipo(tipoId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/tiposDeSala/" + tipoId)
+        .delete("http://otime-api2.herokuapp.com/tiposDeSala/" + tipoId + "/")
         .then(() => {
           this.tipos = this.tipos.filter(p => p.id != tipoId);
         });

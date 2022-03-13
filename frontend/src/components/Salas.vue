@@ -241,7 +241,7 @@ export default {
     },
     deleteSala(salaId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/salas/" + salaId)
+        .delete("http://otime-api2.herokuapp.com/salas/" + salaId + "/")
         .then(() => {
           this.salas = this.salas.filter(p => p.id != salaId);
         });

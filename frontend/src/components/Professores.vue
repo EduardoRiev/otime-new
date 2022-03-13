@@ -240,7 +240,7 @@ export default {
     },
     deleteProfessor(professorId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/professores/" + professorId)
+        .delete("http://otime-api2.herokuapp.com/professores/" + professorId + "/")
         .then(() => {
           this.professores = this.professores.filter(
             (p) => p.id != professorId

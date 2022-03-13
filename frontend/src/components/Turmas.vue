@@ -203,7 +203,7 @@ export default {
     },
     deleteTurma(turmaId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/turmas/" + turmaId)
+        .delete("http://otime-api2.herokuapp.com/turmas/" + turmaId + "/")
         .then(() => {
           this.turmas = this.turmas.filter((p) => p.id != turmaId);
         });
