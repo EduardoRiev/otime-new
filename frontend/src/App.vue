@@ -112,6 +112,10 @@
   </v-app>
 </template>
 
+<style>
+  @import 'assets/styles/custom.css';
+</style>
+
 <script>
 export default {
   name: "App",
