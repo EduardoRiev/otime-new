@@ -8,116 +8,68 @@
       </v-btn>
     </v-toolbar>
     <template v-if="professores && professores.length">
-      <v-card
-        class="my-2"
-        color="blue-grey darken-3"
-        dark
-        v-for="professor in professores"
-        :key="professor.id"
-      >
-        <v-card-title>
-          {{ professor.nome }}
-          <v-spacer></v-spacer>
-        </v-card-title>
-        <v-card-subtitle>{{ professor.abreviatura }}</v-card-subtitle>
-        <v-card-title>
-          Coordenador :
-          <v-simple-checkbox
-            v-model="professor.coordenador"
-            disabled
-          ></v-simple-checkbox>
-        </v-card-title>
-        <v-card-actions>
-        <!------------------------------------------------EDITAR------------------------------------------------>
-          <template>
-            <v-col cols="auto">
-              <v-dialog max-width="600">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn text outlined v-bind="attrs" v-on="on">
-                    <v-icon small>mdi-pencil</v-icon>
-                    EDITAR
-                  </v-btn>
-                </template>
-                <template v-slot:default="dialog3">
-                  <v-card>
-                    <v-card-title class="headline"
-                      >EDITAR PROFESSOR</v-card-title
-                    >
-                    <v-card-text>
-                      <v-container>
-                        <v-form ref="form" v-model="isValid">
-                          <v-text-field
-                            required
-                            label="nome"
-                            v-model="professor.nome"
-                          ></v-text-field>
-                          <v-text-field
-                            required
-                            label="abreviatura"
-                            v-model="professor.abreviatura"
-                          ></v-text-field>
-                          <v-checkbox
-                            label="coordenador"
-                            v-model="professor.coordenador"
-                          ></v-checkbox>
-                        </v-form>
-                      </v-container>
-                    </v-card-text>
-                    <v-spacer></v-spacer>
-                    <v-card-actions class="justify-end">
-                      <v-spacer></v-spacer>
-                      <v-btn text @click="dialog3.value = false">VOLTAR</v-btn>
-                      <v-btn
-                        color="success"
-                        @click="atualizarProfessor(professor.id, professor)"
-                        >ATUALIZAR</v-btn
-                      >
-                    </v-card-actions>
-                  </v-card>
-                </template>
-              </v-dialog>
-            </v-col>
-          </template>
-          <!------------------------------------------------FIM-EDITAR--------------------------------------------->
-          <!------------------------------------------------REMOVER------------------------------------------------>
-          <template>
-            <v-col cols="auto">
-              <v-dialog max-width="600">
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn text outlined v-bind="attrs" v-on="on">
-                    <v-icon small>mdi-delete</v-icon>
-                    REMOVER
-                  </v-btn>
-                </template>
-                <template v-slot:default="dialog2">
-                  <v-card>
-                    <v-card-title class="text-h5 red white--text lighten-2"
-                      >EXCLUIR</v-card-title
-                    ><v-card-text></v-card-text>
-                    <v-card-text class="text-md-body-1 black--text">
-                      Deseja remover ? {{ professor.nome }}
-                    </v-card-text>
-                    <v-divider></v-divider>
-                    <v-card-actions class="justify-end">
-                      <v-spacer></v-spacer>
-                      <v-btn text @click="dialog2.value = false">voltar</v-btn>
-                      <v-btn
-                        color="error"
-                        @click="deleteProfessor(professor.id)"
-                        >REMOVER</v-btn
-                      >
-                    </v-card-actions>
-                  </v-card>
-                </template>
-              </v-dialog>
-            </v-col>
-          </template>
-          <!------------------------------------------------FIM-REMOVER--------------------------------------------->
-          <v-btn outlined text>
-            <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+           <v-row>
+        <v-col
+          v-for="professor in professores"
+          :key="professor.nome"
+          cols="16"
+          sm="12"
+          md="6"
+          lg="4"
+        >
+          <v-card elevation="4">
+            <v-card-title id="titulo" dark class="font-weight-light">{{professor.nome}}</v-card-title>
+            <v-divider></v-divider>
+            <v-card-text class="corpo">
+            </v-card-text>
+            <v-card-actions class="corpo">
+              <v-btn dark text
+                ><v-icon small>mdi-pencil</v-icon>editar
+              </v-btn>
+              <!------------------------------------------------REMOVER------------------------------------------------>
+              <template>
+                <v-col cols="auto">
+                  <v-dialog max-width="600">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn dark text v-bind="attrs" v-on="on">
+                        <v-icon small>mdi-delete</v-icon>
+                        REMOVER
+                      </v-btn>
+                    </template>
+                    <template v-slot:default="dialog2">
+                      <v-card>
+                        <v-card-title class="text-h5 red white--text lighten-2"
+                          >EXCLUIR</v-card-title
+                        ><v-card-text></v-card-text>
+                        <v-card-text class="text-md-body-1 black--text">
+                          Deseja remover ? {{ professor.nome }}
+                        </v-card-text>
+                        <v-divider></v-divider>
+                        <v-card-actions class="justify-end">
+                          <v-spacer></v-spacer>
+                          <v-btn text @click="dialog2.value = false"
+                            >voltar</v-btn
+                          >
+                          <v-btn
+                            color="error"
+                            @click="deleteProfessor(professor.id)"
+                            >REMOVER</v-btn
+                          >
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>
+                </v-col>
+              </template>
+              <!------------------------------------------------FIM-REMOVER--------------------------------------------->
+              <v-btn dark text
+                ><v-icon small>mdi-format-list-bulleted-square</v-icon
+                >detalhes</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
     </template>
     <template>
       <v-row justify="center">
@@ -179,7 +131,6 @@
     </template>
   </v-container>
 </template>
-
 <script>
 export default {
   data() {
@@ -221,26 +172,9 @@ export default {
       this.professor.coordenador = null;
       this.professor.imagem = null;
     },
-    atualizarProfessor(professorId, professor) {
-      this.axios
-        .put(
-          "http://otime-api.herokuapp.com/professores/" + professorId + "/",
-          {
-            nome: professor.nome,
-            abreviatura: professor.abreviatura,
-            coordenador: professor.coordenador
-          }
-        )
-        .then((response) => (this.professores = response.data))
-        .catch((error) => console.log(error));
-      this.axios
-        .get("http://otime-api.herokuapp.com/professores/")
-        .then((response) => (this.professores = response.data))
-        .catch((error) => console.log("Erro na requisição GET: " + error));
-    },
     deleteProfessor(professorId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/professores/" + professorId + "/")
+        .delete("http://otime-api2.herokuapp.com/professores/" + professorId)
         .then(() => {
           this.professores = this.professores.filter(
             (p) => p.id != professorId
@@ -250,6 +184,13 @@ export default {
   },
 };
 </script>
-
 <style>
+#titulo {
+  background-color: #37474F;
+  color: #FFA000;
+}
+.corpo {
+background-color: #212121;
+  color: #F4511E;
+}
 </style>
