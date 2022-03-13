@@ -22,14 +22,14 @@
         <v-card-actions>
           <template>
             <v-col cols="auto">
-              <v-dialog max-width="600">
+              <v-dialog v-model="dialog3" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn text outlined v-bind="attrs" v-on="on">
                     <v-icon small>mdi-pencil</v-icon>
                     EDITAR
                   </v-btn>
                 </template>
-                <template v-slot:default="dialog3">
+                <template>
                   <v-card>
                     <v-card-title>
                       <span class="headline">EDITAR TIPO</span>
@@ -61,7 +61,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn text @click="dialog3.value = false">VOLTAR</v-btn>
+                      <v-btn text @click="dialog3 = false">VOLTAR</v-btn>
                       <v-btn
                         :disabled="!isValid"
                         color="success"
@@ -198,11 +198,11 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/tiposDeSala/")
+      .get("http://otime-api2.herokuapp.com/tiposDeSala/")
       .then(response => (this.tipos = response.data))
       .catch(error => console.log("Erro na requisição GET: " + error));
     this.axios
-      .get("http://otime-api.herokuapp.com/ferramentasDeSala/")
+      .get("http://otime-api2.herokuapp.com/ferramentasDeSala/")
       .then(response => (this.ferramentas = response.data))
       .catch(error => console.log("Erro na requisição GET: " + error));
   },
@@ -210,7 +210,7 @@ export default {
     atualizarTipo(tipo) {
       console.log(tipo);
       this.axios
-        .put("http://otime-api.herokuapp.com/tiposDeSala/" + tipo.id + "/", {
+        .put("http://otime-api2.herokuapp.com/tiposDeSala/" + tipo.id + "/", {
           nome: tipo.nome,
           ferramentas: tipo.ferramentas
         })
@@ -232,7 +232,7 @@ export default {
         ferramentas: this.selectedTools
       };
       this.axios
-        .post("http://otime-api.herokuapp.com/tiposDeSala/", tipo)
+        .post("http://otime-api2.herokuapp.com/tiposDeSala/", tipo)
         .then(response => (this.tipos = [...this.tipos, response.data]))
         .catch(error => console.log(error));
       this.dialog = false;
@@ -241,7 +241,7 @@ export default {
     },
     deleteTipo(tipoId) {
       this.axios
-        .delete("http://otime-api.herokuapp.com/tiposDeSala/" + tipoId)
+        .delete("http://otime-api2.herokuapp.com/tiposDeSala/" + tipoId)
         .then(() => {
           this.tipos = this.tipos.filter(p => p.id != tipoId);
         });

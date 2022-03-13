@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/turmas/")
+      .get("http://otime-api2.herokuapp.com/turmas/")
       .then((response) => {
         console.log("turmas", response);
         this.turmas = response.data;

@@ -36,7 +36,7 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://otime-api.herokuapp.com/salas/")
+      .get("http://otime-api2.herokuapp.com/salas/")
       .then((response) => {
         console.log("salas", response);
         this.salas = response.data;
