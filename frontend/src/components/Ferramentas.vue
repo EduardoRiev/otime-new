@@ -214,8 +214,7 @@ export default {
     deleteFerramenta(ferramentaId) {
       this.axios
         .delete(
-          "http://otime-api2.herokuapp.com/ferramentasDeSala/" + ferramentaId
-        )
+          "http://otime-api2.herokuapp.com/ferramentasDeSala/" + ferramentaId + "/")
         .then(() => {
           this.ferramentas = this.ferramentas.filter(p => p.id != ferramentaId);
         });

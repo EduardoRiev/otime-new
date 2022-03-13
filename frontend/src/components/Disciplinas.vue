@@ -281,7 +281,7 @@ export default {
     },
     deleteDisciplina(disciplinaId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/disciplinas/" + disciplinaId)
+        .delete("http://otime-api2.herokuapp.com/disciplinas/" + disciplinaId + "/")
         .then(() => {
           this.disciplinas = this.disciplinas.filter(
             (p) => p.id != disciplinaId
