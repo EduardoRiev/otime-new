@@ -16,7 +16,7 @@
 
 .v-card__actions > .v-btn.v-btn {
     padding: 0 0px !important;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .v-btn:not(.v-btn--round).v-size--default {
@@ -26,5 +26,14 @@
 }
 
 .v-btn.v-size--default {
-    font-size: 13px;
+    font-size: 14px;
 }
+
+#titulo {
+    background-color: #37474F;
+    color: #FFA000;
+  }
+  .corpo {
+  background-color: #212121;
+    color: #F4511E;
+  }

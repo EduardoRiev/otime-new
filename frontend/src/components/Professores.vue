@@ -185,12 +185,4 @@ export default {
 };
 </script>
 <style>
-#titulo {
-  background-color: #37474F;
-  color: #FFA000;
-}
-.corpo {
-background-color: #212121;
-  color: #F4511E;
-}
 </style>
