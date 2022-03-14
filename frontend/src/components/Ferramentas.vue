@@ -1,38 +1,45 @@
 <template>
   <v-container>
-    <v-toolbar>
-      <v-toolbar-title> Ferramentas </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon> mdi-magnify </v-icon>
-      </v-btn>
+     <v-toolbar color="#FAFAFA" class="mb-1">
+      <v-text-field
+        v-model="search"
+        clearable
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="mdi-magnify"
+        label="Pesquisar"
+      ></v-text-field>
+      <template v-if="$vuetify.breakpoint.mdAndUp">
+        <v-spacer></v-spacer>
+        <v-btn-toggle v-model="sortDesc" mandatory>
+          <v-btn  large depressed color="grey" :value="false">
+            <v-icon color="#fff">mdi-arrow-up</v-icon>
+          </v-btn>
+          <v-btn large depressed color="grey" :value="true">
+            <v-icon color="#fff">mdi-arrow-down</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </template>
     </v-toolbar>
     <template v-if="ferramentas && ferramentas.length">
-      <v-card
-        class="my-2"
-        dark
-        v-for="ferramenta in ferramentas"
-        :key="ferramenta.id"
-      >
-        <v-card-title>
-          {{ ferramenta.nome }}
-          <v-spacer></v-spacer>
-          <v-card-actions>
-            <v-btn icon>
-              <v-icon> mdi-pencil </v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card-title>
-        <v-card-subtitle>
-          {{ ferramenta.descricao }}
-        </v-card-subtitle>
-        <v-card-title> Ferramenta #{{ ferramenta.id }} </v-card-title>
+      <v-row>
+        <v-col  
+          v-for="ferramenta in ferramentas"
+          :key="ferramenta.id">
+       <v-card 
+            elevation="4"
+            class="my-2"
+            dark
+          >
+      <v-card-title id="titulo"  dark  class="text-body-1">{{ ferramenta.nome }}</v-card-title>
+        <v-divider></v-divider>
         <v-card-actions>
           <template>
             <v-col cols="auto">
               <v-dialog v-model="dialog3" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text outlined v-bind="attrs" v-on="on">
+                  <v-btn text  v-bind="attrs" v-on="on">
                     <v-icon small>mdi-pencil</v-icon>
                     EDITAR
                   </v-btn>
@@ -82,7 +89,7 @@
             <v-col cols="auto">
               <v-dialog max-width="600">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn text outlined v-bind="attrs" v-on="on">
+                  <v-btn text  v-bind="attrs" v-on="on">
                     <v-icon small>mdi-delete</v-icon>
                     REMOVER
                   </v-btn>
@@ -111,11 +118,13 @@
             </v-col>
           </template>
 
-          <v-btn outlined text>
+          <v-btn  text>
             <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
           </v-btn>
         </v-card-actions>
       </v-card>
+      </v-col>
+      </v-row>
     </template>
     <template>
       <v-row justify="center">
