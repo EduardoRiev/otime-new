@@ -8,30 +8,78 @@
       </v-btn>
     </v-toolbar>
     <template v-if="professores && professores.length">
-           <v-row>
+      <v-row>
         <v-col
           v-for="professor in professores"
-          :key="professor.nome"
-          cols="16"
-          sm="12"
-          md="6"
-          lg="4"
+          :key="professor.id"
         >
-          <v-card elevation="4">
-            <v-card-title id="titulo" dark class="font-weight-light">{{professor.nome}}</v-card-title>
+          <v-card 
+            elevation="4"
+            class="my-2"
+            dark
+          >
+            <v-card-title id="titulo"  dark  class="text-body-1">{{ professor.nome }}</v-card-title>
             <v-divider></v-divider>
-            <v-card-text class="corpo">
-            </v-card-text>
-            <v-card-actions class="corpo">
-              <v-btn dark text
-                ><v-icon small>mdi-pencil</v-icon>editar
-              </v-btn>
+            <v-card-actions class="corpo" >
+              <!------------------------------------------------EDITAR------------------------------------------------>
+              <template>
+                <v-col cols="auto">
+                  <v-dialog max-width="600">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn text  v-bind="attrs" v-on="on">
+                        <v-icon small>mdi-pencil</v-icon>
+                        EDITAR
+                      </v-btn>
+                    </template>
+                    <template v-slot:default="dialog3">
+                      <v-card>
+                        <v-card-title class="headline"
+                          >EDITAR PROFESSOR</v-card-title
+                        >
+                        <v-card-text>
+                          <v-container>
+                            <v-form ref="form" v-model="isValid">
+                              <v-text-field
+                                required
+                                label="nome"
+                                v-model="professor.nome"
+                              ></v-text-field>
+                              <v-text-field
+                                required
+                                label="abreviatura"
+                                v-model="professor.abreviatura"
+                              ></v-text-field>
+                              <v-checkbox
+                                label="coordenador"
+                                v-model="professor.coordenador"
+                              ></v-checkbox>
+                            </v-form>
+                          </v-container>
+                        </v-card-text>
+                        <v-spacer></v-spacer>
+                        <v-card-actions class="justify-end">
+                          <v-spacer></v-spacer>
+                          <v-btn text @click="dialog3.value = false"
+                            >VOLTAR</v-btn
+                          >
+                          <v-btn
+                            color="success"
+                            @click="atualizarProfessor(professor.id, professor)"
+                            >ATUALIZAR</v-btn
+                          >
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>
+                </v-col>
+              </template>
+              <!------------------------------------------------FIM-EDITAR--------------------------------------------->
               <!------------------------------------------------REMOVER------------------------------------------------>
               <template>
                 <v-col cols="auto">
                   <v-dialog max-width="600">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn dark text v-bind="attrs" v-on="on">
+                      <v-btn text  v-bind="attrs" v-on="on">
                         <v-icon small>mdi-delete</v-icon>
                         REMOVER
                       </v-btn>
@@ -62,10 +110,9 @@
                 </v-col>
               </template>
               <!------------------------------------------------FIM-REMOVER--------------------------------------------->
-              <v-btn dark text
-                ><v-icon small>mdi-format-list-bulleted-square</v-icon
-                >detalhes</v-btn
-              >
+              <v-btn  text>
+                <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -172,9 +219,28 @@ export default {
       this.professor.coordenador = null;
       this.professor.imagem = null;
     },
+    atualizarProfessor(professorId, professor) {
+      this.axios
+        .put(
+          "http://otime-api2.herokuapp.com/professores/" + professorId + "/",
+          {
+            nome: professor.nome,
+            abreviatura: professor.abreviatura,
+            coordenador: professor.coordenador,
+          }
+        )
+        .then((response) => (this.professores = response.data))
+        .catch((error) => console.log(error));
+      this.axios
+        .get("http://otime-api2.herokuapp.com/professores/")
+        .then((response) => (this.professores = response.data))
+        .catch((error) => console.log("Erro na requisição GET: " + error));
+    },
     deleteProfessor(professorId) {
       this.axios
-        .delete("http://otime-api2.herokuapp.com/professores/" + professorId)
+        .delete(
+          "http://otime-api2.herokuapp.com/professores/" + professorId + "/"
+        )
         .then(() => {
           this.professores = this.professores.filter(
             (p) => p.id != professorId
@@ -184,4 +250,5 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+</style>

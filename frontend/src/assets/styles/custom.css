@@ -30,10 +30,12 @@
 }
 
 #titulo {
-    background-color: #37474F;
-    color: #FFA000;
+    background-color: #641700;
+    color: #fff;
+    text-transform: uppercase;
+    -webkit-text-stroke-width: thin;
+    border-bottom: inset;
   }
   .corpo {
-  background-color: #212121;
-    color: #F4511E;
+    background-color: #095159;
   }
