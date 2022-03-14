@@ -1,11 +1,26 @@
  <template>
   <v-container>
-    <v-toolbar>
-      <v-toolbar-title>Professores</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+    <v-toolbar color="#FAFAFA" class="mb-1">
+      <v-text-field
+        v-model="search"
+        clearable
+        flat
+        solo-inverted
+        hide-details
+        prepend-inner-icon="mdi-magnify"
+        label="Pesquisar"
+      ></v-text-field>
+      <template v-if="$vuetify.breakpoint.mdAndUp">
+        <v-spacer></v-spacer>
+        <v-btn-toggle v-model="sortDesc" mandatory>
+          <v-btn  large depressed color="grey" :value="false">
+            <v-icon color="#fff">mdi-arrow-up</v-icon>
+          </v-btn>
+          <v-btn large depressed color="grey" :value="true">
+            <v-icon color="#fff">mdi-arrow-down</v-icon>
+          </v-btn>
+        </v-btn-toggle>
+      </template>
     </v-toolbar>
     <template v-if="professores && professores.length">
       <v-row>

@@ -29,6 +29,7 @@
     font-size: 14px;
 }
 
+
 #titulo {
     background-color: #641700;
     color: #fff;
@@ -39,3 +40,18 @@
   .corpo {
     background-color: #095159;
   }
+
+
+
+  .v-data-table__wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 3px 15px 25px 0px;
+    border-radius: 5px;
+}
+
+.v-data-table__wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 10px 0px 0px 0px;
+}
