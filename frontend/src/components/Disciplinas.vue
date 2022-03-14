@@ -24,8 +24,15 @@
     </v-toolbar>
     <template v-if="disciplinas && disciplinas.length">
       <v-row>
-        <v-col v-for="disciplina in disciplinas" :key="disciplina.id">
-          <v-card elevation="4" class="my-2" dark >
+        <v-col
+          v-for="disciplina in disciplinas"
+          :key="disciplina.id"
+          cols="16"
+          sm="12"
+          md="6"
+          lg="4"
+        >
+          <v-card elevation="4" class="my-2" dark>
             <v-card-title id="titulo" dark class="text-body-1">{{
               disciplina.nome
             }}</v-card-title>
@@ -181,7 +188,7 @@
                 <v-form ref="form" v-model="isValid">
                   <v-text-field
                     required
-                    :rules="[v => !!v || 'Precisamos disso :c']"
+                    :rules="[(v) => !!v || 'Precisamos disso :c']"
                     label="nome"
                     v-model="disciplina.nome"
                   ></v-text-field>
@@ -191,7 +198,7 @@
                   ></v-text-field>
                   <v-text-field
                     required
-                    :rules="[v => !!v || 'Precisamos disso :c']"
+                    :rules="[(v) => !!v || 'Precisamos disso :c']"
                     label="créditos"
                     v-model="disciplina.creditos"
                   ></v-text-field>
@@ -249,27 +256,27 @@ export default {
       disciplina: {
         nome: null,
         abreviatura: null,
-        creditos: null
+        creditos: null,
       },
       selectedTeacher: null,
       selectedPlaces: null,
       dialog: false,
-      isValid: true
+      isValid: true,
     };
   },
   mounted() {
     this.axios
       .get("http://otime-api2.herokuapp.com/disciplinas/")
-      .then(response => (this.disciplinas = response.data))
-      .catch(error => console.log("Erro na requisição GET: " + error));
+      .then((response) => (this.disciplinas = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
       .get("http://otime-api2.herokuapp.com/professores/")
-      .then(response => (this.professores = response.data))
-      .catch(error => console.log("Erro na requisição GET: " + error));
+      .then((response) => (this.professores = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
     this.axios
       .get("http://otime-api2.herokuapp.com/salas/")
-      .then(response => (this.salas = response.data))
-      .catch(error => console.log("Erro na requisição GET: " + error));
+      .then((response) => (this.salas = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
   },
   methods: {
     cadastrarDisciplina() {
@@ -278,14 +285,15 @@ export default {
         abreviatura: this.disciplina.abreviatura,
         credito: this.disciplina.creditos,
         professores: this.selectedTeacher,
-        locais: this.selectedPlaces
+        locais: this.selectedPlaces,
       };
       this.axios
         .post("http://otime-api2.herokuapp.com/disciplinas/", disciplina)
         .then(
-          response => (this.disciplinas = [...this.disciplinas, response.data])
+          (response) =>
+            (this.disciplinas = [...this.disciplinas, response.data])
         )
-        .catch(error => console.log(error));
+        .catch((error) => console.log(error));
       this.dialog = false;
       this.disciplina.nome = null;
       this.disciplina.abreviatura = null;
@@ -300,11 +308,11 @@ export default {
             abreviatura: disciplina.abreviatura,
             credito: disciplina.creditos,
             professores: disciplina.professores,
-            locais: disciplina.locais
+            locais: disciplina.locais,
           }
         )
-        .then(response => (this.disciplinas = response.data))
-        .catch(error => console.log(error));
+        .then((response) => (this.disciplinas = response.data))
+        .catch((error) => console.log(error));
     },
     deleteDisciplina(disciplinaId) {
       this.axios
@@ -312,10 +320,12 @@ export default {
           "http://otime-api2.herokuapp.com/disciplinas/" + disciplinaId + "/"
         )
         .then(() => {
-          this.disciplinas = this.disciplinas.filter(p => p.id != disciplinaId);
+          this.disciplinas = this.disciplinas.filter(
+            (p) => p.id != disciplinaId
+          );
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
