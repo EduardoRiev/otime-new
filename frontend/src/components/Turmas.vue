@@ -24,7 +24,14 @@
     </v-toolbar>
     <template v-if="turmas && turmas.length">
       <v-row>
-        <v-col v-for="turma in turmas" :key="turma.id">
+        <v-col
+          v-for="turma in turmas"
+          :key="turma.id"
+          cols="16"
+          sm="12"
+          md="6"
+          lg="4"
+        >
           <v-card elevation="4" class="my-2" dark>
             <v-card-title id="titulo" dark class="text-body-1">{{
               turma.nome
