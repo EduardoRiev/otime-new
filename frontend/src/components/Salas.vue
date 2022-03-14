@@ -26,9 +26,13 @@
     <template v-if="salas && salas.length">
         <v-row>
         <v-col v-for="sala in salas" :key="sala.id">
-      <v-card class="my-2" dark >
+       <v-card 
+            elevation="4"
+            class="my-2"
+            dark
+          >
       <v-card-title id="titulo"  dark  class="text-body-1">{{ sala.nome }}</v-card-title>
-        <v-card-actions>
+         <v-card-actions class="corpo" >
           <template>
             <v-col cols="auto">
               <v-dialog v-model="dialog3" persistent max-width="600px">
