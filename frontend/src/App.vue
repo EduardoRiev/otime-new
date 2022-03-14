@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app dark flat color="#000010">
+    <v-navigation-drawer v-model="drawer" app dark flat color="#0A2C40">
       <v-list>
         <v-list-item>
           <v-list-item-avatar>
@@ -101,7 +101,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-   <v-app-bar app color="black" flat dark>
+   <v-app-bar app color="#124E70" flat dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class=""><h1 class="title">O'Time</h1></v-toolbar-title>
     </v-app-bar>

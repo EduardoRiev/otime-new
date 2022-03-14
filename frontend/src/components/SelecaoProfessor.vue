@@ -1,6 +1,6 @@
 <template>
-  <v-card max-width="500" class="mx-auto">
-    <v-toolbar color="indigo" dark>
+  <v-card max-width="800" class="mx-auto">
+    <v-toolbar color="#124A63" dark>
       <v-toolbar-title>Selecione o professor</v-toolbar-title>
 
       <v-spacer></v-spacer>

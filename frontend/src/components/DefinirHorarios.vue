@@ -1,7 +1,7 @@
 <template>
 <div>
-  <v-card max-width="600" class="mx-auto my-6">
-    <v-toolbar color="blue-grey darken-3" dark>
+  <v-card max-width="800" class="mx-auto my-6">
+    <v-toolbar color="#124A63" dark>
       <v-toolbar-title>Selecione o modo de visualização</v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -10,7 +10,7 @@
     <v-list>
       <v-list-item link to="/selecao-sala">
         <v-list-item-icon>
-          <v-icon>mdi-chair-school</v-icon>
+          <v-icon color="#124E70">mdi-chair-school</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>Salas</v-list-item-title>
@@ -23,7 +23,7 @@
 
       <v-list-item link to="selecao-disciplina">
         <v-list-item-icon>
-          <v-icon>mdi-book-outline</v-icon>
+          <v-icon color="#124E70">mdi-book-outline</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title> Disciplinas </v-list-item-title>
@@ -36,7 +36,7 @@
 
       <v-list-item link to="/selecao-professor">
         <v-list-item-icon>
-          <v-icon>mdi-teach</v-icon>
+         <v-icon color="#124E70">mdi-human-male-board</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title> Professores </v-list-item-title>
@@ -49,7 +49,7 @@
 
       <v-list-item link to="/selecao-turma">
         <v-list-item-icon>
-          <v-icon>mdi-google-classroom</v-icon>
+          <v-icon color="#124E70">mdi-google-classroom</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title> Turmas </v-list-item-title>

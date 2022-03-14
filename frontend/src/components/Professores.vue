@@ -79,6 +79,7 @@
                           >
                           <v-btn
                             color="success"
+                            text
                             @click="atualizarProfessor(professor.id, professor)"
                             >ATUALIZAR</v-btn
                           >
