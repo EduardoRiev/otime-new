@@ -1,0 +1,30 @@
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.v-main__wrap{
+    padding: 2%;
+}
+
+.v-card > *:last-child:not(.v-btn):not(.v-chip) {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+    justify-content: space-around;
+}
+
+.v-card__actions > .v-btn.v-btn {
+    padding: 0 0px !important;
+    font-size: 13px;
+}
+
+.v-btn:not(.v-btn--round).v-size--default {
+    height: 38px;
+    min-width: 64px;
+    padding: 0 0px !important;
+}
+
+.v-btn.v-size--default {
+    font-size: 13px;
+}
