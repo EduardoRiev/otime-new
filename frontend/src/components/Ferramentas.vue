@@ -34,7 +34,7 @@
           >
       <v-card-title id="titulo"  dark  class="text-body-1">{{ ferramenta.nome }}</v-card-title>
         <v-divider></v-divider>
-        <v-card-actions>
+        <v-card-actions class="corpo" >
           <template>
             <v-col cols="auto">
               <v-dialog v-model="dialog3" persistent max-width="600px">
