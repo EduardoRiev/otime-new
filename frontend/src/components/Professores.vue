@@ -13,7 +13,7 @@
       <template v-if="$vuetify.breakpoint.mdAndUp">
         <v-spacer></v-spacer>
         <v-btn-toggle v-model="sortDesc" mandatory>
-          <v-btn  large depressed color="grey" :value="false">
+          <v-btn large depressed color="grey" :value="false">
             <v-icon color="#fff">mdi-arrow-up</v-icon>
           </v-btn>
           <v-btn large depressed color="grey" :value="true">
@@ -27,21 +27,23 @@
         <v-col
           v-for="professor in professores"
           :key="professor.id"
+          cols="16"
+          sm="12"
+          md="6"
+          lg="4"
         >
-          <v-card 
-            elevation="4"
-            class="my-2"
-            dark
-          >
-            <v-card-title id="titulo"  dark  class="text-body-1">{{ professor.nome }}</v-card-title>
+          <v-card elevation="4" class="my-2" dark>
+            <v-card-title id="titulo" dark class="text-body-1">{{
+              professor.nome
+            }}</v-card-title>
             <v-divider></v-divider>
-            <v-card-actions class="corpo" >
+            <v-card-actions class="corpo">
               <!------------------------------------------------EDITAR------------------------------------------------>
               <template>
                 <v-col cols="auto">
                   <v-dialog max-width="600">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn text  v-bind="attrs" v-on="on">
+                      <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-pencil</v-icon>
                         EDITAR
                       </v-btn>
@@ -95,7 +97,7 @@
                 <v-col cols="auto">
                   <v-dialog max-width="600">
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn text  v-bind="attrs" v-on="on">
+                      <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-delete</v-icon>
                         REMOVER
                       </v-btn>
@@ -126,7 +128,7 @@
                 </v-col>
               </template>
               <!------------------------------------------------FIM-REMOVER--------------------------------------------->
-              <v-btn  text>
+              <v-btn text>
                 <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
               </v-btn>
             </v-card-actions>
