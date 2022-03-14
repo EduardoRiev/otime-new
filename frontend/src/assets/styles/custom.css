@@ -8,7 +8,6 @@
 .v-btn:not(.v-btn--round).v-size--default {
     height: 40px;
     min-width: 64px;
-    width: 142px;
     padding: 0 16px;
 }
 
@@ -37,16 +36,16 @@
     font-size: 14px;
 }
 
-
 #titulo {
-    background-color: #631C25;
+    background-color: #13755E;
     color: #fff;
     text-transform: uppercase;
     -webkit-text-stroke-width: thin;
     border-bottom: inset;
+    
   }
   .corpo {
-    background-color: #165D7D;
+    background-color: #113C32;
   }
 
 
