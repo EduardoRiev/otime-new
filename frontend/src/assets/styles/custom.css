@@ -63,4 +63,11 @@
     margin: 10px 0px 0px 0px;
 }
 
+.v-btn:not(.v-btn--round).v-size--default {
+    height: 36px;
+    min-width: 64px;
+    padding: 0 16px;
+    width: 120px;
+}
+
 

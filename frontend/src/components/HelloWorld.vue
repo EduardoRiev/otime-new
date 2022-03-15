@@ -8,7 +8,6 @@
       <v-col cols="12">
         <v-row justify="center">
           <div id="app">
-            <v-app id="inspire">
               <div class="text-center">
                 <v-dialog v-model="dialog" width="500">
                   <template v-slot:activator="{ on, attrs }">
@@ -27,7 +26,6 @@
                   </v-card>
                 </v-dialog>
               </div>
-            </v-app>
           </div>
         </v-row>
       </v-col>
