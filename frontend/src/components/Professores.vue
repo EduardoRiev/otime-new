@@ -264,11 +264,6 @@ export default {
         });
     },
   },
-    computed: {
-    filteredKeys () {
-      return this.keys.filter(key => key !== 'Name')
-    },
-  },
 };
 </script>
 <style>
