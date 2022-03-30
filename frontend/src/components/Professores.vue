@@ -1,5 +1,11 @@
  <template>
-  <v-container>
+  <v-container fluid>
+    <v-data-iterator
+      :items="professores"
+      :search="search"
+      hide-default-footer
+      >
+    <template v-slot:header>
     <v-toolbar color="#FAFAFA" class="mb-1">
       <v-text-field
         v-model="search"
@@ -10,22 +16,12 @@
         prepend-inner-icon="mdi-magnify"
         label="Pesquisar"
       ></v-text-field>
-      <template v-if="$vuetify.breakpoint.mdAndUp">
-        <v-spacer></v-spacer>
-        <v-btn-toggle v-model="sortDesc" mandatory>
-          <v-btn large depressed color="grey" :value="false">
-            <v-icon color="#fff">mdi-arrow-up</v-icon>
-          </v-btn>
-          <v-btn large depressed color="grey" :value="true">
-            <v-icon color="#fff">mdi-arrow-down</v-icon>
-          </v-btn>
-        </v-btn-toggle>
-      </template>
     </v-toolbar>
-    <template v-if="professores && professores.length">
+    </template>
+    <template v-slot:default="prof">
       <v-row>
         <v-col
-          v-for="professor in professores"
+          v-for="professor in prof.items"
           :key="professor.id"
           cols="16"
           sm="12"
@@ -194,13 +190,15 @@
         </v-dialog>
       </v-row>
     </template>
+    </v-data-iterator>
   </v-container>
 </template>
 <script>
 export default {
   data() {
     return {
-      professores: null,
+      search: '',
+      professores: [],
       professor: {
         nome: null,
         abreviatura: null,
@@ -264,6 +262,11 @@ export default {
             (p) => p.id != professorId
           );
         });
+    },
+  },
+    computed: {
+    filteredKeys () {
+      return this.keys.filter(key => key !== 'Name')
     },
   },
 };
