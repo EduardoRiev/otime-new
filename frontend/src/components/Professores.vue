@@ -1,4 +1,4 @@
- <template>
+<template>
   <v-container fluid>
     <v-data-iterator
       :items="professores"

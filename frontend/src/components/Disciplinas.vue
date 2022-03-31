@@ -42,7 +42,7 @@
                         EDITAR
                       </v-btn>
                     </template>
-                    <template v-slot:default="dialog3">
+                    <template v-slot:default="dialog2">
                       <v-card>
                         <v-card-title class="headline"
                           >EDITAR DISCIPLINA
@@ -100,13 +100,14 @@
                         <v-spacer></v-spacer>
                         <v-card-actions class="justify-end">
                           <v-spacer></v-spacer>
-                          <v-btn text @click="dialog3.value = false"
+                          <v-btn text @click="dialog2.value = false"
                             >VOLTAR</v-btn
                           >
                           <v-btn
                             color="success"
                             @click="
                               atualizarDisciplina(disciplina.id, disciplina)
+                              ,dialog2.value = false
                             "
                             >ATUALIZAR</v-btn
                           >
@@ -159,7 +160,7 @@
       </v-row>
     </template>
     <template>
-      <v-row justify="center">
+       <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -263,10 +264,7 @@ export default {
     };
   },
   mounted() {
-    this.axios
-      .get("http://otime-api2.herokuapp.com/disciplinas/")
-      .then((response) => (this.disciplinas = response.data))
-      .catch((error) => console.log("Erro na requisição GET: " + error));
+    this.PegarDisciplinas()
     this.axios
       .get("http://otime-api2.herokuapp.com/professores/")
       .then((response) => (this.professores = response.data))
@@ -309,7 +307,11 @@ export default {
             locais: disciplina.locais,
           }
         )
-        .then((response) => (this.disciplinas = response.data))
+        .then((response) => {
+          this.disciplina = response.data;
+          this.PegarDisciplinas();
+          this.dialog2 = false;
+          })
         .catch((error) => console.log(error));
     },
     deleteDisciplina(disciplinaId) {
@@ -323,6 +325,12 @@ export default {
           );
         });
     },
+    PegarDisciplinas(){
+      this.axios
+      .get("http://otime-api2.herokuapp.com/disciplinas/")
+      .then((response) => (this.disciplinas = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
+    }
   },
 };
 </script>
