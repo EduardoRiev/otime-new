@@ -3,9 +3,8 @@
    <v-data-iterator
       :items="disciplinas"
       :search="search"
-      hide-default-footer
       >
-    <template v-slot:header>
+    <template v-slot:header >
     <v-toolbar color="#FAFAFA" class="mb-1">
       <v-text-field
         v-model="search"
@@ -18,10 +17,10 @@
       ></v-text-field>
     </v-toolbar>
     </template>
-    <template v-slot:default="disc">
-      <v-row>
+    <template v-if="disciplina && disciplinas.length" v-slot='pro'>
+      <v-row >
         <v-col
-          v-for="disciplina in disc.items"
+          v-for="disciplina in pro.items"
           :key="disciplina.id"
           cols="16"
           sm="12"
@@ -159,8 +158,9 @@
         </v-col>
       </v-row>
     </template>
+    </v-data-iterator>
     <template>
-       <v-row justify="center">
+      <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -242,7 +242,6 @@
         </v-dialog>
       </v-row>
     </template>
-   </v-data-iterator>
   </v-container>
 </template>
 
@@ -251,7 +250,7 @@ export default {
   data() {
     return {
       search: '',
-      disciplinas: [],
+      disciplinas: "",
       disciplina: {
         nome: null,
         abreviatura: null,
