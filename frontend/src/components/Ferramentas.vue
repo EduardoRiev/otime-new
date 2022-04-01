@@ -16,7 +16,7 @@
         label="Pesquisar"
       ></v-text-field>
     </v-toolbar>
-    </template>
+     </template>
     <template v-if="ferramentas && ferramentas.length" v-slot="ferr">
       <v-row>
         <v-col
@@ -45,23 +45,23 @@
                      <template v-slot:default="dialog2">
                       <v-card>
                         <v-card-title>
-                          <span class="headline">EDITAR FERRAMENTA</span>
+                          <span class="headline">Editar ferramenta</span>
                         </v-card-title>
                         <v-card-text>
                           <v-container>
                             <v-form ref="form" v-model="isValid">
                               <v-text-field
+                                required
+                                :rules="[(v) => !!v || 'Precisamos disso :c']"
                                 label="nome"
                                 v-model="ferramenta.nome"
-                              >
-                              {{ ferramenta.nome }}
-                              </v-text-field>
+                              ></v-text-field>
                               <v-text-field
+                                :rules="[(v) => !!v || 'Precisamos disso :c']"
+                                required
                                 label="descrição"
                                 v-model="ferramenta.descricao"
-                              >
-                              {{ ferramenta.descricao }}
-                              </v-text-field>
+                              ></v-text-field>
                             </v-form>
                           </v-container>
                         </v-card-text>
@@ -72,21 +72,13 @@
                             :disabled="!isValid"
                             color="success"
                             text
-                            @click="atualizarFerramenta(ferramenta);
-                            dialog4 = true"
+                            @click="atualizarFerramenta(ferramenta)
+                            ,dialog2.value = false"
                           >
                             Atualizar
                           </v-btn>
                         </v-card-actions>
                       </v-card>
-                      <v-dialog
-                        v-model="dialog4"
-                        max-width="250"
-                        >
-                          <v-alert color="success">
-                            Atualização bem sucedida!
-                          </v-alert>
-                        </v-dialog>
                     </template>
                   </v-dialog>
                 </v-col>
@@ -117,65 +109,19 @@
                           >
                           <v-btn
                             color="error"
-                            @click="deleteFerramenta(ferramenta.id);
-                            dialog5 = true"
+                            @click="deleteFerramenta(ferramenta.id)"
                             >REMOVER</v-btn
                           >
                         </v-card-actions>
                       </v-card>
-                      <v-dialog
-                        v-model="dialog5"
-                        max-width="250"
-                        >
-                          <v-alert color="success">
-                            Exclusão bem sucedida!
-                          </v-alert>
-                        </v-dialog>
                     </template>
                   </v-dialog>
                 </v-col>
               </template>
-              <template>
-                <v-col cols="auto">
-                  <v-dialog max-width="600">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn text v-bind="attrs" v-on="on">
-                        <v-icon small>mdi-format-list-bulleted-square</v-icon>
-                        DETALHES
-                      </v-btn>
-                    </template>
-                    <template v-slot:default="dialog7">
-                      <v-card>
-                        <v-card-title class="headline"
-                          >FERRAMENTA
-                          <v-spacer></v-spacer>
-                          <v-btn text @click="dialog7.value = false">
-                            <v-icon>mdi-close-thick</v-icon>
-                          </v-btn>
-                        </v-card-title>
-                        <v-card-text>
-                          <v-container>
-                              <v-text-field
-                                label="nome"
-                                v-model="ferramenta.nome"
-                                disabled
-                              >
-                                {{ ferramenta.nome }}
-                              </v-text-field>
-                              <v-text-field
-                                label="descrição"
-                                v-model="ferramenta.descricao"
-                                disabled
-                              >
-                                {{ ferramenta.descricao }}
-                              </v-text-field>
-                          </v-container>
-                        </v-card-text>
-                      </v-card>
-                    </template>
-                  </v-dialog>
-                </v-col>
-              </template>
+
+              <v-btn text>
+                <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -228,21 +174,12 @@
                 :disabled="!isValid"
                 color="success"
                 text
-                @click="cadastrarFerramenta();
-                dialog6 = true"
+                @click="cadastrarFerramenta()"
               >
                 Cadastrar
               </v-btn>
             </v-card-actions>
           </v-card>
-          <v-dialog
-            v-model="dialog6"
-            max-width="250"
-            >
-              <v-alert color="success">
-                Cadastro bem sucedido!
-              </v-alert>
-            </v-dialog>
         </v-dialog>
       </v-row>
     </template>
@@ -260,9 +197,6 @@ export default {
         descricao: null,
       },
       dialog: false,
-      dialog4: false,
-      dialog5: false,
-      dialog6: false,
       isValid: true,
     };
   },
