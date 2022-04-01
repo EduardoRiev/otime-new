@@ -1,5 +1,5 @@
 <template>
-   <v-container fluid>
+  <v-container fluid>
     <v-data-iterator
       :items="salas"
       :search="search"

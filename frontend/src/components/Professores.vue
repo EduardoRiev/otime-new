@@ -3,7 +3,6 @@
     <v-data-iterator
       :items="professores"
       :search="search"
-      hide-default-footer
       >
     <template v-slot:header>
     <v-toolbar color="#FAFAFA" class="mb-1">
@@ -18,7 +17,7 @@
       ></v-text-field>
     </v-toolbar>
     </template>
-    <template v-slot:default="prof">
+     <template v-if="professor && professores.length" v-slot:default="prof">
       <v-row>
         <v-col
           v-for="professor in prof.items"
@@ -37,7 +36,7 @@
               <!------------------------------------------------EDITAR------------------------------------------------>
               <template>
                 <v-col cols="auto">
-                  <v-dialog max-width="600">
+                  <v-dialog max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-pencil</v-icon>
@@ -101,7 +100,7 @@
               <!------------------------------------------------REMOVER------------------------------------------------>
               <template>
                 <v-col cols="auto">
-                  <v-dialog max-width="600">
+                  <v-dialog max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-delete</v-icon>
@@ -269,7 +268,7 @@ export default {
   data() {
     return {
       search: '',
-      professores: [],
+      professores: "",
       professor: {
         nome: null,
         abreviatura: null,
@@ -334,11 +333,11 @@ export default {
           );
         });
     },
-    PegarProfessores() {
+    PegarProfessores(){
       this.axios
-        .get("http://otime-api2.herokuapp.com/professores/")
-        .then((response) => (this.professores = response.data))
-        .catch((error) => console.log("Erro na requisição GET: " + error));
+      .get("http://otime-api2.herokuapp.com/professores/")
+      .then((response) => (this.professores = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
     }
   },
 };

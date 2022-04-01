@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid>
+  <v-container fluid>
     <v-data-iterator
       :items="turmas"
       :search="search"

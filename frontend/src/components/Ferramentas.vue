@@ -42,7 +42,7 @@
                         EDITAR
                       </v-btn>
                     </template>
-                     <template v-slot:default="dialog3">
+                     <template v-slot:default="dialog2">
                       <v-card>
                         <v-card-title>
                           <span class="headline">EDITAR FERRAMENTA</span>
@@ -67,7 +67,7 @@
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                          <v-btn text @click="dialog3 = false"> Voltar </v-btn>
+                          <v-btn text @click="dialog2.value = false"> Voltar </v-btn>
                           <v-btn
                             :disabled="!isValid"
                             color="success"
@@ -181,7 +181,7 @@
         </v-col>
       </v-row>
     </template>
-  </v-data-iterator> 
+    </v-data-iterator>
     <template>
       <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
@@ -267,7 +267,7 @@ export default {
     };
   },
   mounted() {
-    this.PegarFerramentas();
+    this.PegarFerramentas()
   },
   methods: {
     cadastrarFerramenta() {
@@ -319,10 +319,11 @@ export default {
               return s;
             }
           });
+          this.PegarFerramentas();
         })
         .catch((error) => console.log(error));
     },
-     PegarFerramentas(){
+    PegarFerramentas(){
       this.axios
       .get("http://otime-api2.herokuapp.com/ferramentasDeSala/")
       .then((response) => (this.ferramentas = response.data))

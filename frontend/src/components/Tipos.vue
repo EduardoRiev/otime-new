@@ -35,7 +35,7 @@
             <v-card-actions class="corpo">
               <template>
                 <v-col cols="auto">
-                   <v-dialog max-width="600px">
+                  <v-dialog max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-pencil</v-icon>
@@ -74,9 +74,7 @@
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                            <v-btn @click ="dialog2.value = false">
-                              VOLTAR
-                            </v-btn>
+                          <v-btn text @click="dialog2.value = false">VOLTAR</v-btn>
                           <v-btn
                             :disabled="!isValid"
                             color="success"
