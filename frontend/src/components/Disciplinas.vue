@@ -1,5 +1,10 @@
 <template>
-  <v-container>
+ <v-container fluid>
+   <v-data-iterator
+      :items="disciplinas"
+      :search="search"
+      >
+    <template v-slot:header >
     <v-toolbar color="#FAFAFA" class="mb-1">
       <v-text-field
         v-model="search"
@@ -10,22 +15,12 @@
         prepend-inner-icon="mdi-magnify"
         label="Pesquisar"
       ></v-text-field>
-      <template v-if="$vuetify.breakpoint.mdAndUp">
-        <v-spacer></v-spacer>
-        <v-btn-toggle v-model="sortDesc" mandatory>
-          <v-btn large depressed color="grey" :value="false">
-            <v-icon color="#fff">mdi-arrow-up</v-icon>
-          </v-btn>
-          <v-btn large depressed color="grey" :value="true">
-            <v-icon color="#fff">mdi-arrow-down</v-icon>
-          </v-btn>
-        </v-btn-toggle>
-      </template>
     </v-toolbar>
-    <template v-if="disciplinas && disciplinas.length">
-      <v-row>
+    </template>
+    <template v-if="disciplina && disciplinas.length" v-slot='pro'>
+      <v-row >
         <v-col
-          v-for="disciplina in disciplinas"
+          v-for="disciplina in pro.items"
           :key="disciplina.id"
           cols="16"
           sm="12"
@@ -46,7 +41,7 @@
                         EDITAR
                       </v-btn>
                     </template>
-                    <template v-slot:default="dialog3">
+                    <template v-slot:default="dialog2">
                       <v-card>
                         <v-card-title class="headline"
                           >EDITAR DISCIPLINA
@@ -104,13 +99,14 @@
                         <v-spacer></v-spacer>
                         <v-card-actions class="justify-end">
                           <v-spacer></v-spacer>
-                          <v-btn text @click="dialog3.value = false"
+                          <v-btn text @click="dialog2.value = false"
                             >VOLTAR</v-btn
                           >
                           <v-btn
                             color="success"
                             @click="
                               atualizarDisciplina(disciplina.id, disciplina)
+                              ,dialog2.value = false
                             "
                             >ATUALIZAR</v-btn
                           >
@@ -162,6 +158,7 @@
         </v-col>
       </v-row>
     </template>
+    </v-data-iterator>
     <template>
       <v-row justify="center">
         <v-dialog v-model="dialog" persistent max-width="600px">
@@ -200,7 +197,7 @@
                     required
                     :rules="[(v) => !!v || 'Precisamos disso :c']"
                     label="créditos"
-                    v-model="disciplina.creditos"
+                    v-model="disciplina.credito"
                   ></v-text-field>
                   <v-row align="center">
                     <v-col>
@@ -252,11 +249,12 @@
 export default {
   data() {
     return {
-      disciplinas: null,
+      search: '',
+      disciplinas: "",
       disciplina: {
         nome: null,
         abreviatura: null,
-        creditos: null,
+        credito: null,
       },
       selectedTeacher: null,
       selectedPlaces: null,
@@ -265,10 +263,7 @@ export default {
     };
   },
   mounted() {
-    this.axios
-      .get("http://otime-api2.herokuapp.com/disciplinas/")
-      .then((response) => (this.disciplinas = response.data))
-      .catch((error) => console.log("Erro na requisição GET: " + error));
+    this.PegarDisciplinas()
     this.axios
       .get("http://otime-api2.herokuapp.com/professores/")
       .then((response) => (this.professores = response.data))
@@ -283,7 +278,7 @@ export default {
       const disciplina = {
         nome: this.disciplina.nome,
         abreviatura: this.disciplina.abreviatura,
-        credito: this.disciplina.creditos,
+        credito: this.disciplina.credito,
         professores: this.selectedTeacher,
         locais: this.selectedPlaces,
       };
@@ -297,7 +292,7 @@ export default {
       this.dialog = false;
       this.disciplina.nome = null;
       this.disciplina.abreviatura = null;
-      this.disciplina.creditos = null;
+      this.disciplina.credito = null;
     },
     atualizarDisciplina(disciplinaId, disciplina) {
       this.axios
@@ -306,12 +301,16 @@ export default {
           {
             nome: disciplina.nome,
             abreviatura: disciplina.abreviatura,
-            credito: disciplina.creditos,
+            credito: disciplina.credito,
             professores: disciplina.professores,
             locais: disciplina.locais,
           }
         )
-        .then((response) => (this.disciplinas = response.data))
+        .then((response) => {
+          this.disciplina = response.data;
+          this.PegarDisciplinas();
+          this.dialog2 = false;
+          })
         .catch((error) => console.log(error));
     },
     deleteDisciplina(disciplinaId) {
@@ -325,6 +324,12 @@ export default {
           );
         });
     },
+    PegarDisciplinas(){
+      this.axios
+      .get("http://otime-api2.herokuapp.com/disciplinas/")
+      .then((response) => (this.disciplinas = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
+    }
   },
 };
 </script>
