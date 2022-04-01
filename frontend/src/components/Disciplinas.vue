@@ -168,9 +168,78 @@
                   </v-dialog>
                 </v-col>
               </template>
-              <v-btn text>
-                <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
-              </v-btn>
+              <template>
+                <v-col cols="auto">
+                  <v-dialog max-width="600">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn text v-bind="attrs" v-on="on">
+                        <v-icon small>mdi-format-list-bulleted-square</v-icon>
+                        DETALHES
+                      </v-btn>
+                    </template>
+                    <template>
+                      <v-card>
+                        <v-card-title class="headline"
+                          >DISCIPLINA
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container>
+                              <v-text-field
+                                label="nome"
+                                v-model="disciplina.nome"
+                                disabled
+                              >
+                                {{ disciplina.nome }}
+                              </v-text-field>
+                              <v-text-field
+                                label="abreviatura"
+                                v-model="disciplina.abreviatura"
+                                disabled
+                              >
+                                {{ disciplina.abreviatura }}
+                              </v-text-field>
+                              <v-text-field
+                                label="créditos"
+                                v-model="disciplina.credito"
+                                disabled
+                              >
+                                {{ disciplina.credito }}
+                              </v-text-field>
+                              <v-row align="center">
+                                <v-col>
+                                  <v-select
+                                    v-model="disciplina.professores"
+                                    :items="professores"
+                                    item-text="nome"
+                                    item-value="id"
+                                    label="professores"
+                                    multiple
+                                    disabled
+                                  >
+                                  </v-select>
+                                </v-col>
+                              </v-row>
+                              <v-row align="center">
+                                <v-col>
+                                  <v-select
+                                    v-model="disciplina.locais"
+                                    :items="salas"
+                                    item-text="nome"
+                                    item-value="id"
+                                    label="locais"
+                                    multiple
+                                    disabled
+                                  >
+                                  </v-select>
+                                </v-col>
+                              </v-row>
+                          </v-container>
+                        </v-card-text>
+                      </v-card>
+                    </template>
+                  </v-dialog>
+                </v-col>
+              </template>
             </v-card-actions>
           </v-card>
         </v-col>
