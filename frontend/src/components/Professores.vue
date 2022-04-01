@@ -76,22 +76,12 @@
                           >
                           <v-btn
                             color="success"
-                            text
-                            @click="atualizarProfessor(professor.id, professor);
-                            dialog2.value = false;
-                            dialog4 = true"
+                            @click="atualizarProfessor(professor.id, professor)
+                            ,dialog2.value = false"
                             >ATUALIZAR</v-btn
                           >
                         </v-card-actions>
                       </v-card>
-                      <v-dialog
-                        v-model="dialog4"
-                        max-width="250"
-                        >
-                          <v-alert color="success">
-                            Atualização bem sucedida!
-                          </v-alert>
-                        </v-dialog>
                     </template>
                   </v-dialog>
                 </v-col>
@@ -113,7 +103,7 @@
                           >EXCLUIR</v-card-title
                         ><v-card-text></v-card-text>
                         <v-card-text class="text-md-body-1 black--text">
-                          Deseja remover {{ professor.nome }}?
+                          Deseja remover ? {{ professor.nome }}
                         </v-card-text>
                         <v-divider></v-divider>
                         <v-card-actions class="justify-end">
@@ -123,71 +113,19 @@
                           >
                           <v-btn
                             color="error"
-                            @click="deleteProfessor(professor.id);
-                            dialog5 = true"
+                            @click="deleteProfessor(professor.id)"
                             >REMOVER</v-btn
                           >
                         </v-card-actions>
                       </v-card>
-                      <v-dialog
-                        v-model="dialog5"
-                        max-width="250"
-                        >
-                          <v-alert color="success">
-                            Exclusão bem sucedida!
-                          </v-alert>
-                        </v-dialog>
                     </template>
                   </v-dialog>
                 </v-col>
               </template>
               <!------------------------------------------------FIM-REMOVER--------------------------------------------->
-              <template>
-                <v-col cols="auto">
-                  <v-dialog max-width="600">
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn text v-bind="attrs" v-on="on">
-                        <v-icon small>mdi-format-list-bulleted-square</v-icon>
-                        DETALHES
-                      </v-btn>
-                    </template>
-                    <template v-slot:default="dialog7">
-                      <v-card>
-                        <v-card-title class="headline"
-                          >PROFESSOR
-                          <v-spacer></v-spacer>
-                          <v-btn text @click="dialog7.value = false">
-                            <v-icon>mdi-close-thick</v-icon>
-                          </v-btn>
-                        </v-card-title>
-                        <v-card-text>
-                          <v-container>
-                              <v-text-field
-                                label="nome"
-                                v-model="professor.nome"
-                                disabled
-                              >
-                                {{ professor.nome }}
-                              </v-text-field>
-                              <v-text-field
-                                label="abreviatura"
-                                v-model="professor.abreviatura"
-                                disabled
-                              >
-                                {{ professor.abreviatura }}
-                              </v-text-field>
-                              <v-checkbox
-                                label="coordenador"
-                                v-model="professor.coordenador"
-                                disabled
-                              ></v-checkbox>
-                          </v-container>
-                        </v-card-text>
-                      </v-card>
-                    </template>
-                  </v-dialog>
-                </v-col>
-              </template>
+              <v-btn text>
+                <v-icon small>mdi-format-list-bulleted-square</v-icon>detalhes
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -243,20 +181,11 @@
                 :disabled="!isValid"
                 color="success"
                 text
-                @click="cadastrarProfessor();
-                dialog6 = true"
+                @click="cadastrarProfessor()"
                 >Cadastrar</v-btn
               >
             </v-card-actions>
           </v-card>
-          <v-dialog
-            v-model="dialog6"
-            max-width="250"
-            >
-              <v-alert color="success">
-                Cadastro bem sucedido!
-              </v-alert>
-            </v-dialog>
         </v-dialog>
       </v-row>
     </template>
@@ -275,9 +204,6 @@ export default {
         coordenador: false,
       },
       dialog: false,
-      dialog4: false,
-      dialog5: false,
-      dialog6: false,
       isValid: true,
     };
   },
