@@ -117,7 +117,7 @@
                         v-model="dialog4"
                         max-width="250"
                         >
-                          <v-alert color="success">
+                          <v-alert color="success" dismissible>
                           Atualização bem sucedida!
                           </v-alert>
                         </v-dialog>
@@ -160,7 +160,7 @@
                         v-model="dialog5"
                         max-width="250"
                         >
-                          <v-alert color="success">
+                          <v-alert color="success" dismissible>
                             Exclusão bem sucedida!
                           </v-alert>
                         </v-dialog>
@@ -177,10 +177,14 @@
                         DETALHES
                       </v-btn>
                     </template>
-                    <template>
+                    <template v-slot:default="dialog7">
                       <v-card>
                         <v-card-title class="headline"
                           >DISCIPLINA
+                          <v-spacer></v-spacer>
+                          <v-btn text @click="dialog7.value = false">
+                            <v-icon>mdi-close-thick</v-icon>
+                          </v-btn>
                         </v-card-title>
                         <v-card-text>
                           <v-container>
@@ -331,7 +335,7 @@
             v-model="dialog6"
             max-width="250"
             >
-              <v-alert color="success">
+              <v-alert color="success" dismissible>
                 Cadastro bem sucedido!
               </v-alert>
             </v-dialog>
