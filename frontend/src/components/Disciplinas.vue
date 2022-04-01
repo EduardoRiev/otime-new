@@ -117,7 +117,7 @@
                         v-model="dialog4"
                         max-width="250"
                         >
-                          <v-alert color="success" dismissible>
+                          <v-alert color="success">
                           Atualização bem sucedida!
                           </v-alert>
                         </v-dialog>
@@ -160,7 +160,7 @@
                         v-model="dialog5"
                         max-width="250"
                         >
-                          <v-alert color="success" dismissible>
+                          <v-alert color="success">
                             Exclusão bem sucedida!
                           </v-alert>
                         </v-dialog>
@@ -335,7 +335,7 @@
             v-model="dialog6"
             max-width="250"
             >
-              <v-alert color="success" dismissible>
+              <v-alert color="success">
                 Cadastro bem sucedido!
               </v-alert>
             </v-dialog>
