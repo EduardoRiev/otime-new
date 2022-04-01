@@ -105,13 +105,22 @@
                           <v-btn
                             color="success"
                             @click="
-                              atualizarDisciplina(disciplina.id, disciplina)
-                              ,dialog2.value = false
+                              atualizarDisciplina(disciplina.id, disciplina);
+                              dialog2.value = false;
+                              dialog4 = true;
                             "
                             >ATUALIZAR</v-btn
                           >
                         </v-card-actions>
                       </v-card>
+                      <v-dialog
+                        v-model="dialog4"
+                        max-width="250"
+                        >
+                          <v-alert color="success">
+                          Atualização bem sucedida!
+                          </v-alert>
+                        </v-dialog>
                     </template>
                   </v-dialog>
                 </v-col>
@@ -141,11 +150,20 @@
                           >
                           <v-btn
                             color="error"
-                            @click="deleteDisciplina(disciplina.id)"
+                            @click="deleteDisciplina(disciplina.id);
+                            dialog5 = true"
                             >REMOVER</v-btn
                           >
                         </v-card-actions>
                       </v-card>
+                      <v-dialog
+                        v-model="dialog5"
+                        max-width="250"
+                        >
+                          <v-alert color="success">
+                            Exclusão bem sucedida!
+                          </v-alert>
+                        </v-dialog>
                     </template>
                   </v-dialog>
                 </v-col>
@@ -233,12 +251,21 @@
                 :disabled="!isValid"
                 color="success"
                 text
-                @click="cadastrarDisciplina()"
+                @click="cadastrarDisciplina();
+                dialog6 = true"
               >
                 Cadastrar
               </v-btn>
             </v-card-actions>
           </v-card>
+          <v-dialog
+            v-model="dialog6"
+            max-width="250"
+            >
+              <v-alert color="success">
+                Cadastro bem sucedido!
+              </v-alert>
+            </v-dialog>
         </v-dialog>
       </v-row>
     </template>
@@ -259,6 +286,9 @@ export default {
       selectedTeacher: null,
       selectedPlaces: null,
       dialog: false,
+      dialog4: false,
+      dialog5: false,
+      dialog6: false,
       isValid: true,
     };
   },
