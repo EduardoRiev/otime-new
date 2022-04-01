@@ -197,7 +197,7 @@
                     required
                     :rules="[(v) => !!v || 'Precisamos disso :c']"
                     label="créditos"
-                    v-model="disciplina.creditos"
+                    v-model="disciplina.credito"
                   ></v-text-field>
                   <v-row align="center">
                     <v-col>
@@ -254,7 +254,7 @@ export default {
       disciplina: {
         nome: null,
         abreviatura: null,
-        creditos: null,
+        credito: null,
       },
       selectedTeacher: null,
       selectedPlaces: null,
@@ -278,7 +278,7 @@ export default {
       const disciplina = {
         nome: this.disciplina.nome,
         abreviatura: this.disciplina.abreviatura,
-        credito: this.disciplina.creditos,
+        credito: this.disciplina.credito,
         professores: this.selectedTeacher,
         locais: this.selectedPlaces,
       };
@@ -292,7 +292,7 @@ export default {
       this.dialog = false;
       this.disciplina.nome = null;
       this.disciplina.abreviatura = null;
-      this.disciplina.creditos = null;
+      this.disciplina.credito = null;
     },
     atualizarDisciplina(disciplinaId, disciplina) {
       this.axios
@@ -301,7 +301,7 @@ export default {
           {
             nome: disciplina.nome,
             abreviatura: disciplina.abreviatura,
-            credito: disciplina.creditos,
+            credito: disciplina.credito,
             professores: disciplina.professores,
             locais: disciplina.locais,
           }
