@@ -3,7 +3,6 @@
     <v-data-iterator
       :items="professores"
       :search="search"
-      hide-default-footer
       >
     <template v-slot:header>
     <v-toolbar color="#FAFAFA" class="mb-1">
@@ -18,7 +17,7 @@
       ></v-text-field>
     </v-toolbar>
     </template>
-    <template v-slot:default="prof">
+     <template v-if="professor && professores.length" v-slot:default="prof">
       <v-row>
         <v-col
           v-for="professor in prof.items"
@@ -37,14 +36,14 @@
               <!------------------------------------------------EDITAR------------------------------------------------>
               <template>
                 <v-col cols="auto">
-                  <v-dialog max-width="600">
+                  <v-dialog max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-pencil</v-icon>
                         EDITAR
                       </v-btn>
                     </template>
-                    <template v-slot:default="dialog3">
+                    <template v-slot:default="dialog2">
                       <v-card>
                         <v-card-title class="headline"
                           >EDITAR PROFESSOR</v-card-title
@@ -72,13 +71,13 @@
                         <v-spacer></v-spacer>
                         <v-card-actions class="justify-end">
                           <v-spacer></v-spacer>
-                          <v-btn text @click="dialog3.value = false"
+                          <v-btn text @click="dialog2.value = false"
                             >VOLTAR</v-btn
                           >
                           <v-btn
                             color="success"
-                            text
-                            @click="atualizarProfessor(professor.id, professor)"
+                            @click="atualizarProfessor(professor.id, professor)
+                            ,dialog2.value = false"
                             >ATUALIZAR</v-btn
                           >
                         </v-card-actions>
@@ -91,7 +90,7 @@
               <!------------------------------------------------REMOVER------------------------------------------------>
               <template>
                 <v-col cols="auto">
-                  <v-dialog max-width="600">
+                  <v-dialog max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn text v-bind="attrs" v-on="on">
                         <v-icon small>mdi-delete</v-icon>
@@ -198,7 +197,7 @@ export default {
   data() {
     return {
       search: '',
-      professores: [],
+      professores: "",
       professor: {
         nome: null,
         abreviatura: null,
@@ -209,10 +208,7 @@ export default {
     };
   },
   mounted() {
-    this.axios
-      .get("http://otime-api2.herokuapp.com/professores/")
-      .then((response) => (this.professores = response.data))
-      .catch((error) => console.log("Erro na requisição GET: " + error));
+    this.PegarProfessores()
   },
   methods: {
     cadastrarProfessor() {
@@ -245,12 +241,12 @@ export default {
             coordenador: professor.coordenador,
           }
         )
-        .then((response) => (this.professores = response.data))
+        .then((response) => {
+          this.professore = response.data;
+          this.PegarProfessores();
+          this.dialog2 = false;
+        })
         .catch((error) => console.log(error));
-      this.axios
-        .get("http://otime-api2.herokuapp.com/professores/")
-        .then((response) => (this.professores = response.data))
-        .catch((error) => console.log("Erro na requisição GET: " + error));
     },
     deleteProfessor(professorId) {
       this.axios
@@ -263,6 +259,12 @@ export default {
           );
         });
     },
+    PegarProfessores(){
+      this.axios
+      .get("http://otime-api2.herokuapp.com/professores/")
+      .then((response) => (this.professores = response.data))
+      .catch((error) => console.log("Erro na requisição GET: " + error));
+    }
   },
 };
 </script>
